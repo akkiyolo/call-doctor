@@ -60,6 +60,20 @@ def diagnose(
     _done()
 
 
+@app.command()
+def clone(
+    call_id: Optional[str] = typer.Argument(None, help="One call id; default all transcripts."),
+    force: bool = typer.Option(False, "--force", help="Ignore cached persona."),
+) -> None:
+    """Extract a customer Persona from the customer's turns only."""
+    from . import clone as cl
+
+    for cid in _ids(call_id):
+        console.rule(cid)
+        console.print_json(cl.clone(cid, force=force).model_dump_json())
+    _done()
+
+
 def main() -> None:
     for stream in (sys.stdout, sys.stderr):  # Windows consoles default to cp1252; keep ₹ and Devanagari
         stream.reconfigure(encoding="utf-8")

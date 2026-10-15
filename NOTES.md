@@ -55,3 +55,9 @@
   an APP_PASSWORD, plus render.yaml. The report templates double as the app's UI (still no JS framework).
 - Render free plan: ephemeral disk (runs/ is lost on redeploy/restart) and the instance sleeps after
   15 min idle (in-flight jobs die). A paid plan with a persistent disk fixes both.
+
+## Step 4: clone
+- The spec has no "clone" role, so the persona extractor uses the `diagnose` role (an analysis model).
+- style_examples are checked to be exact customer substrings; one repair, then non-verbatim lines are dropped.
+- Observed: 2.5-flash gave hindi_english_mix=0.2 for a speaker who is clearly ~50% Hindi. The
+  verbatim style_examples anchor the voice anyway.

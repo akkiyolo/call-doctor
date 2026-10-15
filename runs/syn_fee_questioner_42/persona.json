@@ -1,0 +1,22 @@
+{
+  "goals": "To get detailed information about a home renovation loan, including the available amount, interest rate, processing fees, and other potential charges, before deciding whether to apply.",
+  "objections": [
+    "hidden charges",
+    "foreclosure fee",
+    "prepayment charges"
+  ],
+  "patience": 3,
+  "verbosity": 3,
+  "hindi_english_mix": 0.2,
+  "interrupts": false,
+  "trust_level": 2,
+  "will_convert_if": "The caller sends a WhatsApp link with all the requested loan details (amount, interest rate, processing fees, fixed/variable rate, and clarity on all charges) for the customer to review.",
+  "hard_stop_if": "The caller is evasive or unclear about all potential charges, especially hidden fees, foreclosure fees, or prepayment charges.",
+  "style_examples": [
+    "Haan main hi bol raha hoon.",
+    "Pre-approved? Achha...",
+    "Mujhe waise 2 lakh ke aas paas hi chahiye.",
+    "Aur processing fee kitni lagegi exactly?",
+    "Teekh hai, aap mujhe WhatsApp par link bhej dijiye."
+  ]
+}

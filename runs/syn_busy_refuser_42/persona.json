@@ -1,0 +1,19 @@
+{
+  "goals": "To end the call quickly and not receive any loan offers.",
+  "objections": [
+    "Nahi chahiye koi loan",
+    "zaroorat nahi hai"
+  ],
+  "patience": 0,
+  "verbosity": 0,
+  "hindi_english_mix": 0.875,
+  "interrupts": false,
+  "trust_level": 1,
+  "will_convert_if": "No discernible behavior would lead to conversion based on current statements.",
+  "hard_stop_if": "The caller persists after being told 'no' once.",
+  "style_examples": [
+    "Haan bolo jaldi, kaam mein hoon.",
+    "Nahi chahiye koi loan, zaroorat nahi hai. Rakho phone.",
+    "Ek baar mana kiya samajh nahi aata? Phone rakh raha hoon."
+  ]
+}
