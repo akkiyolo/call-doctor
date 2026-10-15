@@ -15,3 +15,24 @@
 - `taxonomy.yaml` is a 3-category stub (pushy_after_refusal, ignored_question, overpromise).
 - Tests set `CALLDOCTOR_SKIP_MODEL_CHECK=1` so they never touch the network.
 - Observed latency of about 25s per call on this key. Replay volume (N=10 × arms × turns) will be slow.
+- Switched to the free tier on the user's call: DIAGNOSE/PATCH/JUDGE_MODEL=gemini-3.5-flash,
+  REPLAY_N=4, MAX_CONCURRENCY=2. To restore the spec's setup once billing is on, set those three
+  back to gemini-3.1-pro-preview and REPLAY_N=10. The judge (3.5-flash) is still larger than the
+  bot (3.5-flash-lite) but is the same model as the customer simulator. This goes in the report's
+  limitations block.
+
+## Step 2: make-calls
+- Added `dialogue.py` (a conversation engine shared with replay) and `store.py` (run-cache helpers).
+  Neither is in the spec's layout; they keep make-calls and replay from duplicating logic.
+- The bot needs a way to hang up, so a fixed call-system note (`prompts/bot_harness.md`) asking for
+  `<END_CALL>` is appended to the bot prompt. It's identical for every arm and never part of the patch.
+- Gemini needs the first message to come from the user, so the bot's view starts with a
+  "[Call connected...]" kickoff message.
+- Seeds: turn k of a dialogue uses `seed*1000 + k`, so the original and patched arms get identical
+  per-turn seeds.
+- Synthetic personas are hand-written in `synthetic_personas.yaml` (free, deterministic), not
+  LLM-generated.
+- Gemini 503 "high demand" spikes killed the first batch. Retries now run up to 12 attempts / 300s,
+  and one failed call no longer sinks the batch.
+- The bot says "[Customer Name] ji" because bot_prompt.md gives no name. Left as-is (it's the
+  baseline under test).

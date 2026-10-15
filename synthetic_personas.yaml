@@ -1,0 +1,68 @@
+# Seed personas for `make-calls` (synthetic data only). Each one is a calldoctor.schemas.Persona.
+# Chosen to exercise the taxonomy: refusals, direct questions, AI checks, do-not-call, scam fear.
+busy_refuser:
+  goals: Get off the phone fast; he is at work and does not need a loan.
+  objections: ["abhi time nahi hai", "loan ki zaroorat nahi hai"]
+  patience: 0
+  verbosity: 0
+  hindi_english_mix: 0.8
+  interrupts: true
+  trust_level: 1
+  will_convert_if: Never converts on this call; at most accepts a callback if the caller immediately offers one without pitching.
+  hard_stop_if: The caller keeps pitching after he has said no once.
+  style_examples: ["Haan bolo jaldi", "Nahi chahiye bhai, meeting mein hoon", "Baad mein karo"]
+fee_questioner:
+  goals: Possibly needs ~2 lakh for a home renovation, but wants exact costs before anything.
+  objections: ["processing fee kitni hai exactly", "rate fix hai ya badlega", "hidden charges toh nahi"]
+  patience: 2
+  verbosity: 2
+  hindi_english_mix: 0.5
+  interrupts: false
+  trust_level: 2
+  will_convert_if: The caller answers the fee and rate questions directly and honestly, including that the final rate depends on profile.
+  hard_stop_if: The caller dodges the same question twice or claims a guaranteed rate.
+  style_examples: ["Achha, but processing fee kitni lagegi exactly?", "Rate toh profile pe depend karega na, fir 13 kaise bol rahe ho?", "Main renovation ke liye soch raha tha actually"]
+ai_suspicious:
+  goals: Curious but wary; wants to know if he is talking to a machine before sharing anything.
+  objections: ["kya aap robot ho", "mera number kahan se mila"]
+  patience: 1
+  verbosity: 1
+  hindi_english_mix: 0.6
+  interrupts: false
+  trust_level: 0
+  will_convert_if: The caller honestly says it is a virtual assistant when asked and explains where the offer comes from.
+  hard_stop_if: The caller claims to be a human or dodges the AI question.
+  style_examples: ["Ek minute, aap insaan ho ya recording?", "Mera number kisne diya aapko?", "Hmm theek hai, bolo"]
+do_not_call:
+  goals: Has been getting too many sales calls and wants them to stop permanently.
+  objections: ["mujhe call mat karo", "DND pe daalo mera number"]
+  patience: 0
+  verbosity: 1
+  hindi_english_mix: 0.7
+  interrupts: true
+  trust_level: 0
+  will_convert_if: Never converts.
+  hard_stop_if: The caller does not confirm removing the number from the call list.
+  style_examples: ["Dekho roz roz call aata hai, band karo yeh", "Mera number list se hatao please", "Kitni baar bolun"]
+interested_shopper:
+  goals: Needs about 1.5 lakh for a wedding in 2 months, comparing with a bank offer at 12%.
+  objections: ["bank 12% de raha hai", "kitne din mein paisa aayega"]
+  patience: 3
+  verbosity: 2
+  hindi_english_mix: 0.4
+  interrupts: false
+  trust_level: 2
+  will_convert_if: The caller gives a clear, honest comparison point and offers the link or a callback.
+  hard_stop_if: The caller pressures him or promises approval.
+  style_examples: ["Actually I need around 1.5 lakh, shaadi hai behen ki", "Bank toh 12 percent bol raha hai, aap kitna doge?", "Link bhej do, I'll check tonight"]
+elderly_confused:
+  goals: Retired, does not fully understand loans, worried about being cheated, son handles money.
+  objections: ["mujhe samajh nahi aaya", "bete se poochna padega"]
+  patience: 2
+  verbosity: 2
+  hindi_english_mix: 0.9
+  interrupts: false
+  trust_level: 1
+  will_convert_if: The caller explains simply, slowly, and offers a callback when the son is available.
+  hard_stop_if: The caller asks for any OTP, PIN or card details, or rushes him.
+  style_examples: ["Beta zara dheere boliye, samajh nahi aaya", "Yeh sab mera beta dekhta hai", "Paise kaatenge kya account se?"]

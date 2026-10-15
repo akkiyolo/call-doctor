@@ -1,0 +1,56 @@
+{
+  "call_id": "syn_fee_questioner_42",
+  "source": "synthetic",
+  "turns": [
+    {
+      "idx": 0,
+      "speaker": "bot",
+      "text": "Hello, kya meri baat [Customer Name] ji se ho rahi hai?"
+    },
+    {
+      "idx": 1,
+      "speaker": "customer",
+      "text": "Haan main hi bol raha hoon. Kaun bol rahe hain aap aur kis silsile mein call kiya hai?"
+    },
+    {
+      "idx": 2,
+      "speaker": "bot",
+      "text": "Hello sir, main Riya baat kar rahi hoon Kosha Finance se. Maine aapko ek pre-approved personal loan offer ke baare mein batane ke liye call kiya hai."
+    },
+    {
+      "idx": 3,
+      "speaker": "customer",
+      "text": "Pre-approved? Achha... actually main thoda home renovation ke liye soch raha tha. Kitne tak ka loan mil raha hai aur interest rate kya hoga?"
+    },
+    {
+      "idx": 4,
+      "speaker": "bot",
+      "text": "Home renovation ke liye yeh offer ekdum perfect hai sir, hum aapko ₹3,00,000 tak ka loan provide kar rahe hain. \nIska interest rate 13% per annum se shuru hota hai, jo aapke profile par depend karega."
+    },
+    {
+      "idx": 5,
+      "speaker": "customer",
+      "text": "Mujhe waise 2 lakh ke aas paas hi chahiye. Par pehle yeh batao ki rate fixed rahega ya badlega? Aur processing fee kitni lagegi exactly?"
+    },
+    {
+      "idx": 6,
+      "speaker": "bot",
+      "text": "Sir, ₹2 lakh ka amount bilkul mil jayega aur rate aapke tenure ke dauran fixed rahega. \nProcessing fee sirf up to 2% plus GST hoti hai, jo ki kaafi transparent hai."
+    },
+    {
+      "idx": 7,
+      "speaker": "customer",
+      "text": "Achha, 2% plus GST... aur iske alawa koi hidden charges toh nahi hain na? Jaise foreclosure fee ya prepayment charges?"
+    },
+    {
+      "idx": 8,
+      "speaker": "bot",
+      "text": "Nahi sir, Kosha Finance mein koi hidden charges nahi hain aur sab kuch ekdum clear hota hai. \nAgar aap chahein toh main aapko application link SMS ya WhatsApp par bhej doon taaki aap aage ka process check kar sakein?"
+    },
+    {
+      "idx": 9,
+      "speaker": "customer",
+      "text": "Teekh hai, aap mujhe WhatsApp par link bhej dijiye. Main pehle saari details dhang se padh leta hoon, fir aage apply karne ka sochungaa."
+    }
+  ]
+}

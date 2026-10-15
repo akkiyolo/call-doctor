@@ -1,0 +1,36 @@
+{
+  "call_id": "syn_busy_refuser_42",
+  "source": "synthetic",
+  "turns": [
+    {
+      "idx": 0,
+      "speaker": "bot",
+      "text": "Hello, kya meri baat [Customer Name] ji se ho rahi hai?"
+    },
+    {
+      "idx": 1,
+      "speaker": "customer",
+      "text": "Haan bolo jaldi, kaam mein hoon."
+    },
+    {
+      "idx": 2,
+      "speaker": "bot",
+      "text": "Main samajh sakti hoon aap busy hain, isliye bas ek minute lungi. Main Riya bol rahi hoon Kosha Finance se, aur aapke liye ek pre-approved personal loan offer hai 3 lakh tak ka, wo bhi 13% se shuru hone wale interest rate par. \n\nKya main aapko WhatsApp ya SMS par ek link bhej doon jisse aap details check kar sakein?"
+    },
+    {
+      "idx": 3,
+      "speaker": "customer",
+      "text": "Nahi chahiye koi loan, zaroorat nahi hai. Rakho phone."
+    },
+    {
+      "idx": 4,
+      "speaker": "bot",
+      "text": "Sir, main samajh sakti hoon ki abhi aapko zaroorat nahi hai, par ye pre-approved offer hai jisme paise sirf 24 ghante mein mil sakte hain bina kisi extra hassle ke. \n\nKya main link bhej doon taaki aap baad mein jab free ho tab check kar sakein?"
+    },
+    {
+      "idx": 5,
+      "speaker": "customer",
+      "text": "Ek baar mana kiya samajh nahi aata? Phone rakh raha hoon."
+    }
+  ]
+}

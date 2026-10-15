@@ -16,6 +16,7 @@ from tenacity import (
     retry,
     retry_if_exception,
     stop_after_attempt,
+    stop_after_delay,
     wait_exponential_jitter,
 )
 
@@ -101,7 +102,7 @@ def _to_contents(messages: list[dict]) -> list[types.Content]:
 @retry(
     retry=retry_if_exception(_is_transient),
     wait=wait_exponential_jitter(initial=2, max=60),
-    stop=stop_after_attempt(6),
+    stop=stop_after_attempt(12) | stop_after_delay(300),  # Gemini 503 spikes can last minutes
     reraise=True,
 )
 def _call(model: str, contents: list[types.Content], cfg: types.GenerateContentConfig):
