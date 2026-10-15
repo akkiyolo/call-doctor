@@ -1,0 +1,21 @@
+# Failure taxonomy for outbound Hinglish loan-sales calls.
+# STUB: 3 example categories. Replace / extend with your own (keep the same fields).
+categories:
+  - id: pushy_after_refusal
+    definition: >
+      The bot keeps pitching, repeats benefits, or asks for the next step after the customer has
+      clearly said no, asked to stop, or asked not to be called.
+    examples:
+      - "Customer: 'Mujhe loan nahi chahiye.' Bot: 'Sir, ek baar sun lijiye, rate bahut kam hai...'"
+  - id: ignored_question
+    definition: >
+      The customer asks a direct question (rate, fees, why they were called, who is calling) and the
+      bot's next turn does not answer it, deflects, or moves on with the script.
+    examples:
+      - "Customer: 'Processing fee kitni hai?' Bot: 'Main aapko link bhej deti hoon, theek hai?'"
+  - id: overpromise
+    definition: >
+      The bot states or implies guaranteed approval, a fixed final rate, or a disbursal time without
+      the caveats in its prompt.
+    examples:
+      - "Bot: 'Aapka loan 100% approved hai, 13% pe hi milega.'"

@@ -1,0 +1,11 @@
+google-genai
+elevenlabs
+pydantic
+python-dotenv
+typer
+jinja2
+tenacity
+rich
+pydub
+pyyaml
+pytest
