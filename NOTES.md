@@ -112,3 +112,17 @@
   patch/replay/score per call. Per-call failures are isolated; reports are always written, even when
   the budget guard trips.
 - `pipeline.py` (not in the spec layout) holds this logic so the web app can reuse it.
+
+## Steps 11-12: transcribe, voice
+- No ffmpeg on this machine, or on Render's native Python runtime. TTS is requested as raw
+  `pcm_24000`, which pydub can stitch without ffmpeg. Export is mp3 when ffmpeg is on PATH, else wav.
+  The report's <audio> tag plays either.
+- Per-turn TTS cache: reports/audio/cache/<sha256(text|voice|model)>.pcm.
+- Audio = the customer line just before the fork + the continuation, so the listener hears what the
+  bot is responding to.
+- Voices: the user's ElevenLabs library has no Indian-accented voices (free plan, 10k chars/month).
+  Defaults are Bella (bot) and Chris (customer); swap in Indian voices from the Voice Library via .env.
+- transcribe: audio_event words are dropped, spacing is kept, and every non-bot speaker id maps to
+  "customer". Verified by unit tests only (no recordings/ provided yet).
+- voice is verified with a 2-turn live TTS smoke test. A full before/after needs a scored replay
+  pair, which is waiting on Gemini quota.

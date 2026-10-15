@@ -194,6 +194,46 @@ def run_all(
     _done()
 
 
+@app.command()
+def transcribe(
+    path: str = typer.Argument(..., help="Audio file, e.g. recordings/call1.mp3"),
+    bot_speaker: Optional[str] = typer.Option(None, help="Diarized speaker id of the bot (default: first speaker)."),
+    call_id: Optional[str] = typer.Option(None, help="Output id (default: file name)."),
+) -> None:
+    """Transcribe a real call recording with ElevenLabs Scribe into transcripts/<call_id>.json."""
+    from pathlib import Path
+
+    from . import audio
+    from .config import get_settings
+    from .schemas import Transcript
+
+    src = Path(path)
+    turns, mapping = audio.words_to_turns(audio.transcribe(src), bot_speaker)
+    t = Transcript(call_id=call_id or src.stem, source="real", turns=turns)
+    out = get_settings().transcripts_dir / f"{t.call_id}.json"
+    out.write_text(t.model_dump_json(indent=2), encoding="utf-8")
+    console.print(f"speakers: {mapping}  (override with --bot-speaker)")
+    for x in turns:
+        console.print(f"[{x.idx}] [bold]{x.speaker}[/]: {x.text}")
+    console.print(f"[green]wrote[/] {out}")
+
+
+@app.command()
+def voice(
+    call_id: Optional[str] = typer.Argument(None, help="One call id; default VOICE_CALLS or --top."),
+    top: int = typer.Option(3, help="Render the top K calls by improvement."),
+) -> None:
+    """Render before/after continuations to audio with ElevenLabs TTS (cached per turn)."""
+    from . import report as rp
+    from . import voice as vc
+
+    for cid in [call_id] if call_id else vc.select_calls(top):
+        console.rule(cid)
+        if meta := vc.voice(cid):
+            console.print(f"[green]wrote[/] reports/audio/{meta['before']} and {meta['after']}")
+    rp.report()
+
+
 def main() -> None:
     for stream in (sys.stdout, sys.stderr):  # Windows consoles default to cp1252; keep ₹ and Devanagari
         stream.reconfigure(encoding="utf-8")

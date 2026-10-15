@@ -3,4 +3,4 @@
 __pycache__/
 .pytest_cache/
 runs/llm_log.jsonl
-reports/audio/*.mp3
+reports/audio/
