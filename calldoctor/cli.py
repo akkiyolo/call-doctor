@@ -93,6 +93,29 @@ def patch(
     _done()
 
 
+@app.command()
+def replay(
+    call_id: Optional[str] = typer.Argument(None, help="One call id; default all transcripts."),
+    n: Optional[int] = typer.Option(None, help="Runs per arm (default REPLAY_N)."),
+    max_turns: Optional[int] = typer.Option(None, help="Max turns per continuation."),
+    force: bool = typer.Option(False, "--force", help="Discard cached replays."),
+) -> None:
+    """Fork at the break turn and replay original vs patched prompt with paired seeds."""
+    from rich.table import Table
+
+    from . import replay as rp
+
+    for cid in _ids(call_id):
+        console.rule(cid)
+        runs = rp.replay(cid, n=n, max_turns=max_turns, force=force)
+        tab = Table("seed", "arm", "turns", "end_reason", "first bot reply at fork")
+        for r in runs:
+            tab.add_row(str(r.seed), r.arm, str(len(r.turns)), r.end_reason,
+                        (r.turns[0].text[:90] + "...") if r.turns else "")
+        console.print(tab)
+    _done()
+
+
 def main() -> None:
     for stream in (sys.stdout, sys.stderr):  # Windows consoles default to cp1252; keep ₹ and Devanagari
         stream.reconfigure(encoding="utf-8")

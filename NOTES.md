@@ -71,3 +71,11 @@
   aren't in the original prompt. Rejected once with the reasons fed back, then fail.
 - The patcher sees the category definition and diagnosis rationale, not the raw transcript, which
   reduces copying.
+
+## Step 6: replay
+- Fork = turns[:break_idx]; break_idx must be a bot turn. The bot regenerates from break_idx on.
+- Replays are resumable: only missing (arm, seed) pairs are run, so a quota cut-off mid-run loses nothing.
+- Verified on the free tier with `--n 1 --max-turns 6` only.
+- First finding (n=1): the busy_refuser patch kept "you may briefly re-explain benefits once", the
+  patched bot still pitched after a clear refusal, and the customer hung up in both arms. The replay
+  disproved the fix, which is exactly what it is for.
