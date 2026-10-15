@@ -79,3 +79,18 @@
 - First finding (n=1): the busy_refuser patch kept "you may briefly re-explain benefits once", the
   patched bot still pitched after a clear refusal, and the customer hung up in both arms. The replay
   disproved the fix, which is exactly what it is for.
+
+## Step 7: score
+- Blinding: the judge sees only "CONTEXT" + "CONTINUATION" text. run_id is an opaque sha1 of
+  (tag, call, arm, seed), judging order is a seeded shuffle, and judge.md contains none of
+  original/patched/patch/baseline/arm (checked by test).
+- Field order in the judge schema puts `reasons` first, so reasoning is generated before scores.
+- composite = 2*next_step + recovery + human_likeness - 5 if compliance fails. The paired win rate
+  compares composites on the same seed; ties count 0.5.
+- Regression: this call's patched prompt is replayed on the next REGRESSION_CALLS diagnosed+cloned
+  calls (both arms, max(1, N/2) seeds, reusing that call's own original-arm replays when cached).
+  delta = mean composite(patched) - mean composite(original), averaged over those calls.
+- Bug fixed: concurrent threads raced to build the Gemini client, and the GC'd duplicate closed its
+  HTTP client mid-request. Client creation is now under the lock.
+- Free tier: the judge (3.8-flash) hit 503s and then its daily quota; the original-arm score for
+  busy_refuser seed 42 is still pending and fills in on the next `score` run.

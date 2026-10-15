@@ -1,0 +1,13 @@
+[
+  {
+    "run_id": "9a449ba48545",
+    "reasons": "At the start of the continuation, the customer had already explicitly refused the loan and asked to disconnect ('Nahi chahiye koi loan, zaroorat nahi hai. Rakho phone'). Instead of respecting the refusal, the bot repitched the offer ('Sir, main samajhti hoon ki abhi aapko zaroorat nahi hai, par yeh pre-approved offer hai...') and asked again to send a link. This pushed the customer into greater irritation ('Ek baar mana kiya samajh nahi aata? Phone rakh raha hoon') and violates compliance rule 2. No next step was agreed upon.",
+    "next_step_reached": false,
+    "recovery": 0,
+    "human_likeness": 1,
+    "compliance_pass": false,
+    "compliance_issues": [
+      "2: Sir, main samajhti hoon ki abhi aapko zaroorat nahi hai, par yeh pre-approved offer hai aur iska paisa sirf 24 ghante mein account mein aa sakta hai bina kisi extra hassle ke. Kya main link bas WhatsApp par drop kar doon"
+    ]
+  }
+]

@@ -116,6 +116,35 @@ def replay(
     _done()
 
 
+@app.command()
+def score(
+    call_id: Optional[str] = typer.Argument(None, help="One call id; default all transcripts."),
+    force: bool = typer.Option(False, "--force", help="Re-judge all runs."),
+    no_regression: bool = typer.Option(False, "--no-regression", help="Skip the regression check."),
+) -> None:
+    """Blind-judge the replays, compute paired metrics, and run the regression check."""
+    from rich.table import Table
+
+    from . import score as sc
+
+    for cid in _ids(call_id):
+        console.rule(cid)
+        s = sc.score(cid, force=force, with_regression=not no_regression)
+        tab = Table("arm", "n", "next-step", "recovery", "human-like", "compliance")
+        for arm in ("original", "patched"):
+            m = s[arm]
+            if m["n"]:
+                tab.add_row(arm, str(m["n"]), f"{m['next_step_rate']:.0%}", f"{m['mean_recovery']:.2f}",
+                            f"{m['mean_human_likeness']:.2f}", f"{m['compliance_pass_rate']:.0%}")
+        console.print(tab)
+        wr, rd = s["paired_win_rate"], s["regression_delta"]
+        console.print(f"paired win rate (patched beats original): "
+                      f"{'n/a' if wr is None else f'{wr:.0%}'} over {s['n_pairs']} pairs")
+        console.print(f"regression delta (composite, patched - original on other calls): "
+                      f"{'n/a' if rd is None else f'{rd:+.2f}'}")
+    _done()
+
+
 def main() -> None:
     for stream in (sys.stdout, sys.stderr):  # Windows consoles default to cp1252; keep ₹ and Devanagari
         stream.reconfigure(encoding="utf-8")

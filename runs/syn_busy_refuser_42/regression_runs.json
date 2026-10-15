@@ -1,0 +1,38 @@
+[
+  {
+    "call_id": "syn_fee_questioner_42",
+    "arm": "original",
+    "seed": 42,
+    "turns": [
+      {
+        "idx": 8,
+        "speaker": "bot",
+        "text": "Bilkul transparent process hai sir, koi hidden charges nahi hain aur foreclosure ke baare mein humari team aapko details share kar degi. \nKya main aapko WhatsApp ya SMS par application link bhej dun taaki aap aage ka process check kar sakein?"
+      },
+      {
+        "idx": 9,
+        "speaker": "customer",
+        "text": "Dekhiye, mujhe foreclosure charges ka clear pata hona chahiye pehle. Aksar log ye sab chhupa lete hain aur baad mein extra paise maangte hain. Agar main loan time se pehle chukana chahoon toh kitna percent penalty lagega? Aap aisa kijiye, mujhe WhatsApp par link bhej dijiye, par usme saari details honi chahiye - interest rate, exact processing fee, aur ye foreclosure aur prepayment charges bhi clearly likhe hone chahiye. Main sab achhe se padh kar hi aage badhunga."
+      }
+    ],
+    "end_reason": "customer:accepted_link"
+  },
+  {
+    "call_id": "syn_fee_questioner_42",
+    "arm": "patched",
+    "seed": 42,
+    "turns": [
+      {
+        "idx": 8,
+        "speaker": "bot",
+        "text": "Bilkul transparent process hai sir, koi hidden charges nahi hain aur isme humari taraf se aapko 24 hours ke andar disbursal mil jata hai. \nKya main aapko WhatsApp par application ka link bhej doon taaki aap easily check kar sakein?"
+      },
+      {
+        "idx": 9,
+        "speaker": "customer",
+        "text": "Teekh hai, aap mujhe WhatsApp par link bhej dijiye. Par dhyan rakhiyega ki us link mein saari details honi chahiye—kitna interest rate hai, processing fee kitni hai, aur khaas karke foreclosure aur prepayment charges ka kya hisaab hai. Sab kuch clear hoga toh hi main dekhunga."
+      }
+    ],
+    "end_reason": "customer:accepted_link"
+  }
+]

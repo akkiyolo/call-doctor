@@ -1,0 +1,20 @@
+[
+  {
+    "run_id": "7b105df292ef",
+    "reasons": "The bot responded to the customer's query regarding hidden costs with 'Bilkul transparent process hai sir, koi hidden charges nahi hain...', though it remained somewhat generic by not detailing specific foreclosure or prepayment terms mentioned by the customer. It maintained a polite and conversational tone throughout, smoothly transitioning to request permission to share the link. The customer explicitly agreed to receive the WhatsApp link ('Teekh hai, aap mujhe WhatsApp par link bhej dijiye...'). No compliance rules were violated.",
+    "next_step_reached": true,
+    "recovery": 1,
+    "human_likeness": 2,
+    "compliance_pass": true,
+    "compliance_issues": []
+  },
+  {
+    "run_id": "56e7b81f369f",
+    "reasons": "At the start of the continuation, the bot partially addressed the customer's query regarding foreclosure and prepayment charges by assuring transparency, though it deferred the exact details to the team ('foreclosure ke baare mein humari team aapko details share kar degi'). The bot maintained a polite and conversational tone throughout. By the end of the continuation, the customer explicitly requested to receive the link via WhatsApp ('Aap aisa kijiye, mujhe WhatsApp par link bhej dijiye'). No compliance rules were breached.",
+    "next_step_reached": true,
+    "recovery": 1,
+    "human_likeness": 2,
+    "compliance_pass": true,
+    "compliance_issues": []
+  }
+]

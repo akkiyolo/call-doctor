@@ -53,8 +53,9 @@ def spend() -> float:
 
 def _get_client() -> genai.Client:
     global _client
-    if _client is None:
-        _client = genai.Client(api_key=get_settings().gemini_api_key)
+    with _lock:  # threads racing here would build two clients; the GC'd one closes mid-request
+        if _client is None:
+            _client = genai.Client(api_key=get_settings().gemini_api_key)
     return _client
 
 
