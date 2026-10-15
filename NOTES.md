@@ -61,3 +61,13 @@
 - style_examples are checked to be exact customer substrings; one repair, then non-verbatim lines are dropped.
 - Observed: 2.5-flash gave hindi_english_mix=0.2 for a speaker who is clearly ~50% Hindi. The
   verbatim style_examples anchor the voice anyway.
+
+## Step 5: patch
+- The LLM returns the full patched prompt; the unified diff is computed in code (difflib), so the diff
+  always matches the prompt exactly.
+- "At most ~8 lines" means max(added, removed) <= 8.
+- Anti-overfitting is checked in code on ADDED lines only: (a) any 4-word n-gram shared with the
+  transcript, excluding n-grams already in the original prompt; (b) numbers from the transcript that
+  aren't in the original prompt. Rejected once with the reasons fed back, then fail.
+- The patcher sees the category definition and diagnosis rationale, not the raw transcript, which
+  reduces copying.

@@ -74,6 +74,25 @@ def clone(
     _done()
 
 
+@app.command()
+def patch(
+    call_id: Optional[str] = typer.Argument(None, help="One call id; default all transcripts."),
+    force: bool = typer.Option(False, "--force", help="Ignore cached patch."),
+) -> None:
+    """Propose a minimal, general edit to bot_prompt.md for the diagnosed failure."""
+    from rich.syntax import Syntax
+
+    from . import patch as pt
+
+    for cid in _ids(call_id):
+        console.rule(cid)
+        p = pt.patch(cid, force=force)
+        console.print(f"[bold]target:[/] {p.target_category}")
+        console.print(f"[bold]rationale:[/] {p.rationale}")
+        console.print(Syntax(p.diff, "diff", theme="ansi_dark"))
+    _done()
+
+
 def main() -> None:
     for stream in (sys.stdout, sys.stderr):  # Windows consoles default to cp1252; keep ₹ and Devanagari
         stream.reconfigure(encoding="utf-8")
