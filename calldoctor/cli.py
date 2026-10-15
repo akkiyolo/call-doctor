@@ -157,6 +157,43 @@ def report(
         console.print(f"[green]wrote[/] {p}")
 
 
+@app.command("judge-check")
+def judge_check(k: Optional[int] = typer.Option(None, help="Items to review (default JUDGE_CHECK_K).")) -> None:
+    """Review K random judge verdicts and mark agree/disagree per dimension."""
+    from . import judge_check as jc
+
+    jc.run(k)
+
+
+@app.command("run-all")
+def run_all(
+    force: bool = typer.Option(False, "--force", help="Recompute every step instead of using caches."),
+    n: Optional[int] = typer.Option(None, help="Runs per arm (default REPLAY_N)."),
+) -> None:
+    """diagnose -> clone -> patch -> replay -> score -> report for every transcript."""
+    from rich.table import Table
+
+    from . import pipeline
+
+    rows = pipeline.run_all(force=force, n=n, log=console.print)
+    tab = Table("call", "break", "status", "win rate", "next step o->p", "compliance o->p", "regression")
+    pct = lambda x: "-" if x is None else f"{x:.0%}"
+    for r in rows:
+        s = r.get("summary")
+        if s:
+            tab.add_row(r["call_id"], r.get("break", ""), r["status"], pct(s["paired_win_rate"]),
+                        f"{pct(s['original']['next_step_rate'])} -> {pct(s['patched']['next_step_rate'])}",
+                        f"{pct(s['original']['compliance_pass_rate'])} -> {pct(s['patched']['compliance_pass_rate'])}",
+                        "-" if s["regression_delta"] is None else f"{s['regression_delta']:+.2f}")
+        else:
+            tab.add_row(r["call_id"], r.get("break", ""), r["status"], "", "", "", "")
+    console.print(tab)
+    from .report import total_cost
+
+    console.print(f"[bold]total API cost (all runs, from llm_log):[/] ${total_cost():.4f}")
+    _done()
+
+
 def main() -> None:
     for stream in (sys.stdout, sys.stderr):  # Windows consoles default to cp1252; keep ₹ and Devanagari
         stream.reconfigure(encoding="utf-8")

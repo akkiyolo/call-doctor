@@ -34,5 +34,41 @@
       }
     ],
     "end_reason": "customer:accepted_link"
+  },
+  {
+    "call_id": "syn_fee_questioner_42",
+    "arm": "original",
+    "seed": 43,
+    "turns": [
+      {
+        "idx": 8,
+        "speaker": "bot",
+        "text": "Sir, Kosha Finance mein koi hidden charges nahi hote, sab kuch ekdum transparent hai. \nKya main aapko WhatsApp ya SMS par application link bhej dun taaki aap details check kar sakein?"
+      },
+      {
+        "idx": 9,
+        "speaker": "customer",
+        "text": "Aapne kaha transparent hai, par foreclosure fee aur prepayment charges exact kitne hain? Zero toh nahi honge shayad. Aap aisa kijiye, mujhe WhatsApp par ek link bhej dijiye jisme yeh saari details—amount, interest rate, fixed/variable status, processing fee, aur sabhi charges—ekdum clear likhe hon. Main poora detail check karke hi decide karunga."
+      }
+    ],
+    "end_reason": "customer:accepted_link"
+  },
+  {
+    "call_id": "syn_fee_questioner_42",
+    "arm": "patched",
+    "seed": 43,
+    "turns": [
+      {
+        "idx": 8,
+        "speaker": "bot",
+        "text": "Sir, Kosha Finance mein sab kuch ekdum transparent hai aur koi hidden charges nahi hain. \nKya main aapko iska application link SMS ya WhatsApp par bhej doon taaki aap easily check kar sakein?"
+      },
+      {
+        "idx": 9,
+        "speaker": "customer",
+        "text": "Teekh hai, aap mujhe WhatsApp par link bhej dijiye, par usme sab details honi chahiye. Specifically, foreclosure fee aur prepayment charges ke baare mein clear-cut likha hona chahiye, kyunki baad mein bank waale bahut pareshan karte hain hidden charges ko lekar. Agar wahan sab kuch sahi laga aur saare charges transparent hue, toh hi main aage process karunga."
+      }
+    ],
+    "end_reason": "customer:accepted_link"
   }
 ]

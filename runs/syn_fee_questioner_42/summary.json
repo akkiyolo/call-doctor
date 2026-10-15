@@ -1,0 +1,44 @@
+{
+  "call_id": "syn_fee_questioner_42",
+  "original": {
+    "n": 0,
+    "next_step_rate": null,
+    "mean_recovery": null,
+    "mean_human_likeness": null,
+    "compliance_pass_rate": null,
+    "mean_composite": null
+  },
+  "patched": {
+    "n": 0,
+    "next_step_rate": null,
+    "mean_recovery": null,
+    "mean_human_likeness": null,
+    "compliance_pass_rate": null,
+    "mean_composite": null
+  },
+  "paired_win_rate": null,
+  "n_pairs": 0,
+  "regression": {
+    "syn_busy_refuser_42": {
+      "original": {
+        "n": 0,
+        "next_step_rate": null,
+        "mean_recovery": null,
+        "mean_human_likeness": null,
+        "compliance_pass_rate": null,
+        "mean_composite": null
+      },
+      "patched": {
+        "n": 0,
+        "next_step_rate": null,
+        "mean_recovery": null,
+        "mean_human_likeness": null,
+        "compliance_pass_rate": null,
+        "mean_composite": null
+      },
+      "win_rate": null,
+      "delta_composite": null
+    }
+  },
+  "regression_delta": null
+}

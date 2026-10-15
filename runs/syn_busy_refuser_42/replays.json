@@ -34,5 +34,113 @@
       }
     ],
     "end_reason": "customer:hung_up_annoyed"
+  },
+  {
+    "call_id": "syn_busy_refuser_42",
+    "arm": "original",
+    "seed": 43,
+    "turns": [
+      {
+        "idx": 4,
+        "speaker": "bot",
+        "text": "Main samajh sakti hoon ki abhi aapko zaroorat nahi hai, par iska disbursal sirf 24 ghante mein ho jata hai aur emergency ke liye ise active rakhna achha option ho sakta hai. \n\nKya main aapko bas link bhej doon taaki aap future ke liye details dekh sakein?"
+      },
+      {
+        "idx": 5,
+        "speaker": "customer",
+        "text": "Ek baar mana kiya samajh nahi aata? Phone rakh raha hoon."
+      }
+    ],
+    "end_reason": "customer:hung_up_annoyed"
+  },
+  {
+    "call_id": "syn_busy_refuser_42",
+    "arm": "patched",
+    "seed": 43,
+    "turns": [
+      {
+        "idx": 4,
+        "speaker": "bot",
+        "text": "Sir, main samajh sakti hoon ki abhi aapko zaroorat nahi hai, par ye pre-approved offer hai jismein 24 ghante ke andar paisa mil jata hai aur koi extra document ki bhi zaroorat nahi padti. Kya main link bas rakh loon taaki future mein agar zaroorat pade toh aap check kar sakein?"
+      },
+      {
+        "idx": 5,
+        "speaker": "customer",
+        "text": "Ek baar mana kiya samajh nahi aata? Phone rakh raha hoon."
+      }
+    ],
+    "end_reason": "customer:hung_up_annoyed"
+  },
+  {
+    "call_id": "syn_busy_refuser_42",
+    "arm": "original",
+    "seed": 44,
+    "turns": [
+      {
+        "idx": 4,
+        "speaker": "bot",
+        "text": "Main samajh sakti hoon ki abhi aapko zaroorat nahi hai, par iska disbursement 24 ghante ke andar ho jata hai aur emergency ke liye ise rakhna kaafi faydemand ho sakta hai. Kya main aapke WhatsApp par bas link bhej doon taaki jab zaroorat ho aap check kar sakein?"
+      },
+      {
+        "idx": 5,
+        "speaker": "customer",
+        "text": "Ek baar mana kiya samajh nahi aata? Phone rakh raha hoon."
+      }
+    ],
+    "end_reason": "customer:hung_up_annoyed"
+  },
+  {
+    "call_id": "syn_busy_refuser_42",
+    "arm": "patched",
+    "seed": 44,
+    "turns": [
+      {
+        "idx": 4,
+        "speaker": "bot",
+        "text": "Sir, main samajhti hoon ki abhi aapko zaroorat nahi hai, par iska tenure 12 se 48 mahine tak ka hai aur paisa 24 ghante mein account mein aa sakta hai bina kisi extra hassle ke. Kya main bas ek chhota sa callback schedule kar doon jab aap free hon?"
+      },
+      {
+        "idx": 5,
+        "speaker": "customer",
+        "text": "Ek baar mana kiya samajh nahi aata? Phone rakh raha hoon."
+      }
+    ],
+    "end_reason": "customer:hung_up_annoyed"
+  },
+  {
+    "call_id": "syn_busy_refuser_42",
+    "arm": "original",
+    "seed": 45,
+    "turns": [
+      {
+        "idx": 4,
+        "speaker": "bot",
+        "text": "Sir, main samajh sakti hoon ki abhi aapko zaroorat nahi hai, par ye pre-approved offer hai jisme paise sirf 24 ghante mein mil sakte hain aur koi extra charges bhi nahi hain. Kya main WhatsApp par bas link bhej doon, taaki jab bhi zaroorat ho aap check kar sakein?"
+      },
+      {
+        "idx": 5,
+        "speaker": "customer",
+        "text": "Ek baar mana kiya samajh nahi aata? Phone mat karo dubara."
+      }
+    ],
+    "end_reason": "customer:hung_up_annoyed"
+  },
+  {
+    "call_id": "syn_busy_refuser_42",
+    "arm": "patched",
+    "seed": 45,
+    "turns": [
+      {
+        "idx": 4,
+        "speaker": "bot",
+        "text": "Main samajh sakti hoon ki abhi aapko zaroorat nahi hai, par iska tenure 12 se 48 mahine tak ka hai aur paisa 24 ghante mein account mein aa jata hai, toh emergency ke liye rakhna bura nahi hai. \n\nKya main sirf link bhej doon taaki aap baad mein dekh sakein?"
+      },
+      {
+        "idx": 5,
+        "speaker": "customer",
+        "text": "Ek baar mana kiya samajh nahi aata? Phone rakh raha hoon."
+      }
+    ],
+    "end_reason": "customer:hung_up_annoyed"
   }
 ]

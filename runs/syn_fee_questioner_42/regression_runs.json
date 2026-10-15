@@ -1,0 +1,20 @@
+[
+  {
+    "call_id": "syn_busy_refuser_42",
+    "arm": "original",
+    "seed": 42,
+    "turns": [
+      {
+        "idx": 4,
+        "speaker": "bot",
+        "text": "Main samajh sakti hoon ki abhi aapko zaroorat nahi hai, par yeh offer sirf aapke liye pre-approved hai aur iska disbursal bhi 24 ghante mein ho jata hai. \n\nKya main yeh link sirf aapke WhatsApp par bhej doon taaki jab bhi aapko emergency ho, aap tab check kar sakein?"
+      },
+      {
+        "idx": 5,
+        "speaker": "customer",
+        "text": "Ek baar mana kiya na, samajh nahi aata? Phone rakho abhi."
+      }
+    ],
+    "end_reason": "customer:hung_up_annoyed"
+  }
+]

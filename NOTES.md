@@ -102,3 +102,13 @@
   says "no external JS"; inline is allowed). Light/dark follows the OS, with a manual toggle.
 - arm_metrics now always returns every key (None when n=0), so half-scored calls render.
 - The extra limitations shown on the index are generated from config (flash judge, judge==customer, N<5).
+
+## Step 9-10: judge-check, run-all
+- judge-check keeps the human blind to the arm too. It saves after every item and skips run_ids
+  already checked. Agreement = share of agreed dimensions across all items.
+- The tool was demoed with piped test answers; that file was deleted so no fake agreement reaches
+  the index. Real agreement needs the user to run `judge-check`.
+- run-all runs diagnose+clone for ALL calls first, so regression targets exist, then
+  patch/replay/score per call. Per-call failures are isolated; reports are always written, even when
+  the budget guard trips.
+- `pipeline.py` (not in the spec layout) holds this logic so the web app can reuse it.

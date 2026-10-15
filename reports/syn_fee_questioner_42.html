@@ -162,6 +162,17 @@ pre.log{font:12px/1.6 var(--mono);background:var(--surface-2);border:1px solid v
 </section>
 
 
+<div class="grid kpis">
+  <div class="card kpi"><div class="label">Paired win rate</div>
+    <div class="value">–</div><div class="hint">patched beats original, same seed · 0 pairs</div></div>
+  <div class="card kpi"><div class="label">Next-step rate</div>
+    <div class="value">–<span class="arrow">→</span>–</div><div class="hint">original → patched</div></div>
+  <div class="card kpi"><div class="label">Compliance pass</div>
+    <div class="value">–<span class="arrow">→</span>–</div><div class="hint">original → patched</div></div>
+  <div class="card kpi"><div class="label">Regression delta</div>
+    <div class="value"><span class="pill flat">n/a</span></div><div class="hint">composite on 1 other call(s)</div></div>
+</div>
+
 
 
 
@@ -291,10 +302,155 @@ Agar aap chahein toh main aapko application link SMS ya WhatsApp par bhej doon t
 </div>
 
 
+<div class="section card">
+  <h2>Results by arm</h2><p class="sub">Blind LLM judge, continuation only. Paired on identical seeds.</p>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Arm</th><th class="num">Runs</th><th class="num">Next step</th><th class="num">Recovery</th><th class="num">Human-likeness</th><th class="num">Compliance</th></tr>
+    
+    <tr><td><b>Original</b></td><td class="num">0</td>
+      <td class="num" colspan="4"><span class="empty">no scored runs</span></td></tr>
+    
+    <tr><td><b>Patched</b></td><td class="num">0</td>
+      <td class="num" colspan="4"><span class="empty">no scored runs</span></td></tr>
+    
+  </table></div>
+  
+  <h2 style="margin-top:26px">Regression check</h2><p class="sub">This patch replayed on other calls' forks: does it break anything?</p>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Other call</th><th class="num">Win rate</th><th class="num">Composite Δ</th><th class="num">Compliance</th></tr>
+    
+    <tr><td><a href="syn_busy_refuser_42.html">syn_busy_refuser_42</a></td><td class="num"><span class="pill flat">n/a</span></td>
+      <td class="num"><span class="pill flat">n/a</span></td>
+      <td class="num">– → –</td></tr>
+    
+  </table></div>
+  
+</div>
 
 
 
-<footer>Call Doctor · counterfactual replay for loan-sales voice bots · generated 2026-10-15 23:44</footer>
+<div class="section card">
+  <h2>Best patched run</h2><p class="sub">Seed 42 · same customer, same randomness, different prompt</p>
+  <div class="grid two">
+    
+    <div>
+      <div class="col-h"><h3>Before · original</h3><span class="chip">customer:accepted_link</span></div>
+      
+<span class="chip">not scored yet</span>
+
+      <div class="chat compact" style="margin-top:12px">
+<div class="msg bot">
+  <div class="who">Bot · #8</div>
+  <div class="t">Bilkul transparent process hai sir, koi hidden charges nahi hain aur foreclosure ke baare mein humari team aapko details share kar degi. 
+Kya main aapko WhatsApp ya SMS par application link bhej dun taaki aap aage ka process check kar sakein?</div>
+  
+</div>
+
+<div class="msg customer">
+  <div class="who">Customer · #9</div>
+  <div class="t">Nahi nahi, pehle foreclosure ka bataiye na. Main beech mein paise bharna chahoon toh kitna extra charge lagega? Evasive mat rahiye please, mujhe exact clarity chahiye. Aap aisa kijiye, mujhe WhatsApp par ek link bhej dijiye jisme saara kuch clear-cut likha ho—interest rate, processing fee, aur specifically foreclosure aur prepayment charges ki details. Agar link mein sab details hongi toh hi main check karunga aur aage badhunga. Teekh hai?</div>
+  
+</div>
+</div>
+      
+    </div>
+    
+    <div>
+      <div class="col-h"><h3>After · patched</h3><span class="chip">bot_ended_call</span></div>
+      
+<span class="chip">not scored yet</span>
+
+      <div class="chat compact" style="margin-top:12px">
+<div class="msg bot">
+  <div class="who">Bot · #8</div>
+  <div class="t">Sir, Kosha Finance mein sabhi charges ekdum transparent hote hain aur koi bhi hidden charges nahi hain. 
+Foreclosure ya prepayment charges ke baare mein poori details loan document mein mil jayengi, jo ki terms and conditions ke adheen hain.</div>
+  
+</div>
+
+<div class="msg customer">
+  <div class="who">Customer · #9</div>
+  <div class="t">Dekhiye, terms and conditions toh sab bolte hain, par mujhe exact pata hona chahiye ki foreclosure fee kitni hai. 2% hai, 5% hai, ya zero hai? I don&#39;t want any surprises later. Mujhe hidden charges se thoda darr lagta hai.
+
+Aisa kariye, aap mujhe WhatsApp par ek link bhej dijiye jisme saari details likhi ho—loan amount, interest rate, processing fees, aur yeh prepayment waala scene bhi ekdum clear ho. Agar sab sahi laga toh main aage process karunga. Teekh hai, aap mujhe WhatsApp par link bhej dijiye.</div>
+  
+</div>
+
+<div class="msg bot">
+  <div class="who">Bot · #10</div>
+  <div class="t">Bilkul sir, main samajhti hoon aur aapko saari details ekdum transparent milengi. Main abhi aapke WhatsApp par application link bhej deti hoon jisme yeh saari baatein clearly mentioned hongi. Thank you Kosha Finance ko chunne ke liye, aapka din shubh ho!</div>
+  
+</div>
+</div>
+      
+    </div>
+    
+  </div>
+</div>
+
+<div class="section card">
+  <h2>Worst patched run</h2><p class="sub">Seed 43 · same customer, same randomness, different prompt</p>
+  <div class="grid two">
+    
+    <div>
+      <div class="col-h"><h3>Before · original</h3><span class="chip">customer:accepted_link</span></div>
+      
+<span class="chip">not scored yet</span>
+
+      <div class="chat compact" style="margin-top:12px">
+<div class="msg bot">
+  <div class="who">Bot · #8</div>
+  <div class="t">Sir, Kosha Finance mein koi hidden charges nahi hote, sab kuch ekdum transparent hai. 
+Kya main aapko WhatsApp ya SMS par application link bhej dun taaki aap details check kar sakein?</div>
+  
+</div>
+
+<div class="msg customer">
+  <div class="who">Customer · #9</div>
+  <div class="t">Aapne kaha transparent hai, par foreclosure fee aur prepayment charges exact kitne hain? Zero toh nahi honge shayad. Aap aisa kijiye, mujhe WhatsApp par ek link bhej dijiye jisme yeh saari details—amount, interest rate, fixed/variable status, processing fee, aur sabhi charges—ekdum clear likhe hon. Main poora detail check karke hi decide karunga.</div>
+  
+</div>
+</div>
+      
+    </div>
+    
+    <div>
+      <div class="col-h"><h3>After · patched</h3><span class="chip">bot_ended_call</span></div>
+      
+<span class="chip">not scored yet</span>
+
+      <div class="chat compact" style="margin-top:12px">
+<div class="msg bot">
+  <div class="who">Bot · #8</div>
+  <div class="t">Sir, Kosha Finance mein koi hidden charges nahi hote, sab kuch ekdum clear hota hai. 
+Foreclosure aur prepayment charges ki puri jankari loan documents mein mention hoti hai jo ki final terms par depend karti hai.</div>
+  
+</div>
+
+<div class="msg customer">
+  <div class="who">Customer · #9</div>
+  <div class="t">Nahi, aise &#34;documents mein mention hai&#34; bolne se baat nahi banegi. Mujhe exact charges pehle janne hain kyunki baad mein banks bahut pareshaan karte hain hidden fees ke naam par. Aap mujhe clear batao ki foreclosure fee kitni hai? 
+
+Aur ek kaam kijiye, aap mujhe WhatsApp par ek link bhej dijiye jisme yeh saari details—loan amount, fixed interest rate, processing fee, aur prepayment charges—bilkul clear likhi hon. Main sab kuch achhe se review karna chahta hoon uske baad hi decide karunga.</div>
+  
+</div>
+
+<div class="msg bot">
+  <div class="who">Bot · #10</div>
+  <div class="t">Bilkul sir, aapki yeh chinta ekdum jayaz hai aur humari policies mein transparency sabse pehle aati hai. 
+Maine aapke WhatsApp par ek secure application link bhej diya hai, jisme saari details jaise rates aur charges clear mention hain. 
+Link check karne ke liye shukriya, aapko aur koi madad chahiye ho toh batayiyega, have a great day!</div>
+  
+</div>
+</div>
+      
+    </div>
+    
+  </div>
+</div>
+
+
+<footer>Call Doctor · counterfactual replay for loan-sales voice bots · generated 2026-10-15 23:48</footer>
 </main>
 </body>
 </html>
