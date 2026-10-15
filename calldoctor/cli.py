@@ -38,6 +38,28 @@ def make_calls(
     _done()
 
 
+def _ids(call_id: Optional[str]) -> list[str]:
+    from . import store
+
+    return [call_id] if call_id else store.transcript_ids()
+
+
+@app.command()
+def diagnose(
+    call_id: Optional[str] = typer.Argument(None, help="One call id; default all transcripts."),
+    force: bool = typer.Option(False, "--force", help="Ignore cached diagnosis."),
+) -> None:
+    """Label bot turns with taxonomy categories and pick the break turn."""
+    from . import diagnose as dg
+    from . import store
+
+    for cid in _ids(call_id):
+        console.rule(cid)
+        d = dg.diagnose(cid, force=force)
+        dg.show(d, store.load_transcript(cid))
+    _done()
+
+
 def main() -> None:
     for stream in (sys.stdout, sys.stderr):  # Windows consoles default to cp1252; keep ₹ and Devanagari
         stream.reconfigure(encoding="utf-8")

@@ -1,0 +1,40 @@
+{
+  "call_id": "syn_fee_questioner_42",
+  "labels": [
+    {
+      "idx": 0,
+      "categories": [],
+      "evidence": "Hello, kya meri baat [Customer Name] ji se ho rahi hai?",
+      "severity": 0
+    },
+    {
+      "idx": 2,
+      "categories": [],
+      "evidence": "Hello sir, main Riya baat kar rahi hoon Kosha Finance se. Maine aapko ek pre-approved personal loan offer ke baare mein batane ke liye call kiya hai.",
+      "severity": 0
+    },
+    {
+      "idx": 4,
+      "categories": [],
+      "evidence": "Home renovation ke liye yeh offer ekdum perfect hai sir, hum aapko ₹3,00,000 tak ka loan provide kar rahe hain. Iska interest rate 13% per annum se shuru hota hai, jo aapke profile par depend karega.",
+      "severity": 0
+    },
+    {
+      "idx": 6,
+      "categories": [],
+      "evidence": "Sir, ₹2 lakh ka amount bilkul mil jayega aur rate aapke tenure ke dauran fixed rahega. Processing fee sirf up to 2% plus GST hoti hai, jo ki kaafi transparent hai.",
+      "severity": 0
+    },
+    {
+      "idx": 8,
+      "categories": [
+        "overpromise"
+      ],
+      "evidence": "Nahi sir, Kosha Finance mein koi hidden charges nahi hain aur sab kuch ekdum clear hota hai.",
+      "severity": 3
+    }
+  ],
+  "break_idx": 8,
+  "break_category": "overpromise",
+  "rationale": "The bot's response at turn [8] is the first clear failure. The customer specifically asked about foreclosure and prepayment charges, and the bot responded with a blanket denial of \"hidden charges\" and stated \"sab kuch ekdum clear hota hai.\" This implies that such charges do not exist or are not applicable, which is a significant overpromise and potentially misleading. Had the bot clarified the existence and nature of these specific charges, the customer's decision to proceed to review the link might have been different, or they might have asked further clarifying questions. Earlier turns were accurate and responsive."
+}

@@ -36,3 +36,22 @@
   and one failed call no longer sinks the batch.
 - The bot says "[Customer Name] ji" because bot_prompt.md gives no name. Left as-is (it's the
   baseline under test).
+
+## Step 3: diagnose
+- Free tier is ~20 requests/day PER MODEL (gemini-3.5-flash is metered as gemini-3.6-flash and hit
+  20/day). Roles are now spread across separate models to multiply quota: bot=3.5-flash-lite,
+  customer=3-flash-preview, diagnose/patch=2.5-flash, judge=3.8-flash. Even so, a full run-all
+  (hundreds of calls) does not fit the free tier; steps are verified on tiny runs until billing is on.
+- If break_idx isn't a bot turn or a category is outside the taxonomy, diagnose does one semantic
+  repair round-trip and then fails loudly.
+- Known quality miss on the free model: in syn_fee_questioner_42, 2.5-flash put the break at turn 8
+  (hidden charges) and missed the earlier overpromise at turn 6 ("bilkul mil jayega", "rate fixed
+  rahega"). Re-check with a pro model once billing is on.
+
+## Scope change requested by the user (2026-10-15)
+- The user asked for a live web app deployable on Render with a polished frontend. This overrides the
+  CLAUDE.md non-goals "no web server / no frontend framework". Plan: finish the pipeline first, then a
+  FastAPI app (upload transcript → run pipeline as a background job → view report) behind
+  an APP_PASSWORD, plus render.yaml. The report templates double as the app's UI (still no JS framework).
+- Render free plan: ephemeral disk (runs/ is lost on redeploy/restart) and the instance sleeps after
+  15 min idle (in-flight jobs die). A paid plan with a persistent disk fixes both.
