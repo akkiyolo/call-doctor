@@ -9,3 +9,6 @@ rich
 pydub
 pyyaml
 pytest
+fastapi
+uvicorn
+python-multipart

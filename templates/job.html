@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Job {{ job.id }} · Call Doctor{% endblock %}
+{% block head %}{% if job.status in ["queued", "running"] %}<meta http-equiv="refresh" content="4">{% endif %}{% endblock %}
+{% block body %}
+{% set text = job.log | join("\n") %}
+<section class="hero">
+  <div class="eyebrow">Job {{ job.id }} · {{ job.kind }}</div>
+  <h1>{{ job.call_id or "New call" }}</h1>
+  <p class="lede"><span class="status {{ job.status }}">{% if job.status == "running" %}<span class="spin"></span>{% endif %}{{ job.status }}</span>
+  {% if job.status == "queued" and queued_ahead %} · {{ queued_ahead }} job(s) ahead{% endif %}
+  {% if job.status in ["queued", "running"] %} · this page refreshes every few seconds{% endif %}</p>
+</section>
+<div class="card">
+  <div class="steps">
+    {% for step, key in [("transcribe", "speakers"), ("diagnose", "break at"), ("clone", "] patch"), ("patch", "] replay"), ("replay", "] score"), ("score", "wrote index"), ("report", "wrote index")] %}
+      {% if step != "transcribe" or job.kind == "audio" %}<span class="{{ 'ok' if key in text else '' }}">{{ step }}</span>{% endif %}
+    {% endfor %}
+  </div>
+  <pre class="log">{{ text or "Waiting for the worker..." }}</pre>
+  {% if has_report and job.status in ["done", "failed"] %}
+  <a class="btn primary" href="/calls/{{ job.call_id }}">Open report →</a>
+  {% endif %}
+</div>
+{% endblock %}

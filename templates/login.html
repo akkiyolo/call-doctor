@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% set hide_nav = true %}
+{% block title %}Sign in · Call Doctor{% endblock %}
+{% block body %}
+<div class="center"><div class="card login">
+  <div class="eyebrow">Private workspace</div>
+  <h1>Welcome <span class="grad">back</span></h1>
+  <p class="sub">This app spends API credits, so it is password-protected.</p>
+  {% if error %}<div class="err">{{ error }}</div>{% endif %}
+  <form method="post" action="/login">
+    <div class="field"><label class="lbl" for="pw">Password</label>
+      <input id="pw" type="password" name="password" autocomplete="current-password" autofocus required></div>
+    <button class="btn primary full" style="justify-content:center;padding:11px">Sign in</button>
+  </form>
+</div></div>
+{% endblock %}

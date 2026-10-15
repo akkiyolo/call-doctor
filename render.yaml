@@ -1,0 +1,61 @@
+# Render Blueprint: New → Blueprint → pick this repo. Secrets marked `sync: false` are prompted once.
+services:
+  - type: web
+    name: call-doctor
+    runtime: python
+    plan: free            # free: disk resets on deploy/restart and the instance sleeps after 15 min idle
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn calldoctor.web:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: APP_PASSWORD
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      # Free-tier Gemini: ~20 requests/day per model, so roles are spread over models.
+      # With billing on, set DIAGNOSE/PATCH/JUDGE to gemini-3.1-pro-preview and REPLAY_N to 10.
+      - key: BOT_MODEL
+        value: gemini-3.5-flash-lite
+      - key: CUSTOMER_MODEL
+        value: gemini-3-flash-preview
+      - key: DIAGNOSE_MODEL
+        value: gemini-2.5-flash
+      - key: PATCH_MODEL
+        value: gemini-2.5-flash
+      - key: JUDGE_MODEL
+        value: gemini-3.8-flash
+      - key: BOT_TEMPERATURE
+        value: "0.7"
+      - key: CUSTOMER_TEMPERATURE
+        value: "0.9"
+      - key: DIAGNOSE_TEMPERATURE
+        value: "0.0"
+      - key: PATCH_TEMPERATURE
+        value: "0.3"
+      - key: JUDGE_TEMPERATURE
+        value: "0.0"
+      - key: REPLAY_N
+        value: "4"
+      - key: REPLAY_MAX_TURNS
+        value: "12"
+      - key: REGRESSION_CALLS
+        value: "2"
+      - key: RANDOM_SEED
+        value: "42"
+      - key: MAX_CONCURRENCY
+        value: "2"
+      - key: MAX_SPEND_USD
+        value: "5"
+      - key: ELEVENLABS_STT_MODEL
+        value: scribe_v2
+      - key: ELEVENLABS_TTS_MODEL
+        value: eleven_v3
+      - key: ELEVENLABS_BOT_VOICE_ID
+        value: hpp4J3VqNfWAUOO0d1Us
+      - key: ELEVENLABS_CUSTOMER_VOICE_ID
+        value: iP95p4xoKVk53GoZ742B

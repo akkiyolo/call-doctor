@@ -126,3 +126,18 @@
   "customer". Verified by unit tests only (no recordings/ provided yet).
 - voice is verified with a 2-turn live TTS smoke test. A full before/after needs a scored replay
   pair, which is waiting on Gemini quota.
+
+## Web app + Render (user-requested scope change)
+- FastAPI, server-rendered with the same jinja templates; no JS framework. The only JS is the inline
+  theme toggle; the job page auto-refreshes with <meta refresh>. The input-type switcher is pure
+  CSS (:has).
+- Auth: APP_PASSWORD is required (the app refuses to start without it). The session cookie is
+  HMAC(APP_PASSWORD), httponly, samesite=lax, and secure on Render. Every route except /login and
+  /healthz is gated.
+- Jobs: an in-memory queue with ONE worker thread, so parallel uploads can't multiply spend. Jobs
+  are lost on restart. The LLM budget guard is per server process, so MAX_SPEND_USD caps the
+  server's lifetime spend (5 USD in render.yaml).
+- Inputs: pasted "bot:/customer:" text (source=roleplay), transcript JSON, audio (Scribe), or a
+  synthetic persona. Uploads are capped at 25 MB, ids are sanitised, and audio/call routes are
+  regex-checked against path traversal.
+- Rich console errors from replay/score (e.g. a single judge 429) go to the server log, not the job log.

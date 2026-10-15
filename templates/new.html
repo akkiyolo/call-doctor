@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}New analysis · Call Doctor{% endblock %}
+{% block body %}
+<section class="hero">
+  <div class="eyebrow">New analysis</div>
+  <h1>Bring a call. <span class="grad">We'll find the break.</span></h1>
+  <p class="lede">Diagnose → clone the customer → patch the prompt → replay both prompts on identical seeds → blind-judge. Takes a few minutes.</p>
+</section>
+<div class="card">
+  {% if error %}<div class="err">{{ error }}</div>{% endif %}
+  <form method="post" action="/new" enctype="multipart/form-data">
+    <div class="seg" role="radiogroup" aria-label="Input type">
+      <label><input type="radio" id="m-paste" name="mode" value="paste" checked>Paste text<small>bot: / customer: lines</small></label>
+      <label><input type="radio" id="m-json" name="mode" value="json">Transcript JSON<small>Call Doctor format</small></label>
+      <label><input type="radio" id="m-audio" name="mode" value="audio">Recording<small>ElevenLabs Scribe</small></label>
+      <label><input type="radio" id="m-synthetic" name="mode" value="synthetic">Synthetic<small>simulated customer</small></label>
+    </div>
+
+    <div class="panel p-paste field">
+      <label class="lbl" for="pasted">Transcript</label>
+      <textarea id="pasted" name="pasted" placeholder="bot: Namaste, kya meri baat Rahul ji se ho rahi hai?
+customer: Haan bolo, kaun?
+bot: Main Riya, Kosha Finance se. Aapke liye pre-approved loan offer hai...
+customer: Nahi chahiye, rakho phone."></textarea>
+      <span class="hint-s">Hinglish is kept exactly as written: Roman, Devanagari or mixed.</span>
+    </div>
+    <div class="panel p-json field">
+      <label class="lbl">Transcript file</label>
+      <div class="drop"><input type="file" name="transcript_file" accept=".json,application/json"></div>
+      <span class="hint-s">{"call_id", "source", "turns": [{"idx", "speaker": "bot" | "customer", "text"}]}</span>
+    </div>
+    <div class="panel p-audio field">
+      <label class="lbl">Call recording</label>
+      <div class="drop"><input type="file" name="audio_file" accept="audio/*"></div>
+      <span class="hint-s">The first speaker is assumed to be the bot (outbound call). Language is auto-detected.</span>
+    </div>
+    <div class="panel p-synthetic field">
+      <label class="lbl" for="persona">Persona</label>
+      <select id="persona" name="persona">{% for p in personas %}<option value="{{ p }}">{{ p | replace("_", " ") }}</option>{% endfor %}</select>
+      <span class="hint-s">The baseline bot calls a simulated customer, then the pipeline analyses that call.</span>
+    </div>
+
+    <div class="row">
+      <div class="field"><label class="lbl" for="name">Call name <span class="hint-s">(optional)</span></label>
+        <input id="name" type="text" name="name" placeholder="e.g. mumbai_refusal_01" pattern="[A-Za-z0-9_\-]*"></div>
+      <div class="field"><label class="lbl" for="n">Replays per arm</label>
+        <input id="n" type="text" inputmode="numeric" name="n" value="{{ replay_n }}" pattern="[0-9]*"></div>
+    </div>
+    <button class="btn primary" style="padding:11px 18px">Run analysis →</button>
+  </form>
+</div>
+{% endblock %}

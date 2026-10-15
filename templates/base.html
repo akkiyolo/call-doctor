@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{% block title %}Call Doctor{% endblock %}</title>
+{% block head %}{% endblock %}
 <style>{% include "_style.css" %}</style>
 <script>
   try{var t=localStorage.getItem("cd-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
@@ -14,7 +15,8 @@
 <nav class="nav"><div class="in">
   <a class="brand" href="{{ urls.home }}"><span class="logo">✚</span>Call Doctor</a>
   <span class="sp"></span>
-  {% if app_mode %}<a class="btn" href="/jobs">Jobs</a><a class="btn primary" href="/new">+ New analysis</a>{% endif %}
+  {% if app_mode and not hide_nav %}<a class="btn" href="/jobs">Jobs</a><a class="btn primary" href="/new">+ New analysis</a>
+  <form method="post" action="/logout" style="margin:0"><button class="btn icon-btn" title="Log out" aria-label="Log out">⎋</button></form>{% endif %}
   <button class="btn icon-btn" onclick="cdTheme()" aria-label="Toggle theme" title="Toggle theme">◐</button>
 </div></nav>
 <main class="wrap">

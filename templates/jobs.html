@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Jobs · Call Doctor{% endblock %}
+{% block body %}
+<section class="hero"><div class="eyebrow">Jobs</div><h1>Pipeline runs</h1>
+  <p class="lede">One job runs at a time so uploads can't multiply API spend. Spend this server session:
+  <b>${{ "%.4f" | format(spend) }}</b> of ${{ "%.2f" | format(budget) }} budget.</p></section>
+<div class="card">
+  {% if jobs %}<div class="scroll"><table class="tbl">
+    <tr><th>Job</th><th>Call</th><th>Source</th><th>Status</th><th>Started</th></tr>
+    {% for j in jobs %}<tr class="row-link">
+      <td><a href="/jobs/{{ j.id }}"><b>{{ j.id }}</b></a></td><td>{{ j.call_id or "–" }}</td><td>{{ j.kind }}</td>
+      <td><span class="status {{ j.status }}">{% if j.status == "running" %}<span class="spin"></span>{% endif %}{{ j.status }}</span></td>
+      <td style="color:var(--faint)">{{ j.started }}</td></tr>{% endfor %}
+  </table></div>
+  {% else %}<p class="empty">No jobs yet. <a href="/new">Start an analysis →</a></p>{% endif %}
+</div>
+{% endblock %}
