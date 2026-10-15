@@ -1,7 +1,12 @@
 {
   "call_id": "syn_busy_refuser_42",
   "original": {
-    "n": 0
+    "n": 0,
+    "next_step_rate": null,
+    "mean_recovery": null,
+    "mean_human_likeness": null,
+    "compliance_pass_rate": null,
+    "mean_composite": null
   },
   "patched": {
     "n": 1,

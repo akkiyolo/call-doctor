@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block title %}{{ call_id }} · Call Doctor{% endblock %}
+{% block body %}
+<section class="hero">
+  <div class="eyebrow">{{ source }} call · {{ n_turns }} turns</div>
+  <h1>{{ call_id }}</h1>
+  {% if diagnosis %}
+  <p class="lede">Broke at turn <b>#{{ diagnosis.break_idx }}</b> with <span class="chip s3">{{ diagnosis.break_category }}</span>.
+  {% if summary and summary.paired_win_rate is not none %}The patched prompt beat the original on
+  <b>{{ m.pct(summary.paired_win_rate) }}</b> of paired replays.{% endif %}</p>
+  {% else %}<p class="lede">Not diagnosed yet.</p>{% endif %}
+</section>
+
+{% if summary %}
+<div class="grid kpis">
+  <div class="card kpi"><div class="label">Paired win rate</div>
+    <div class="value">{{ m.pct(summary.paired_win_rate) }}</div><div class="hint">patched beats original, same seed · {{ summary.n_pairs }} pairs</div></div>
+  <div class="card kpi"><div class="label">Next-step rate</div>
+    <div class="value">{{ m.pct(summary.original.next_step_rate) }}<span class="arrow">→</span>{{ m.pct(summary.patched.next_step_rate) }}</div><div class="hint">original → patched</div></div>
+  <div class="card kpi"><div class="label">Compliance pass</div>
+    <div class="value">{{ m.pct(summary.original.compliance_pass_rate) }}<span class="arrow">→</span>{{ m.pct(summary.patched.compliance_pass_rate) }}</div><div class="hint">original → patched</div></div>
+  <div class="card kpi"><div class="label">Regression delta</div>
+    <div class="value">{{ m.delta(summary.regression_delta) }}</div><div class="hint">composite on {{ summary.regression | length }} other call(s)</div></div>
+</div>
+{% endif %}
+
+{% if audio %}
+<div class="section audio">
+  <div class="card"><h2>Before</h2><p class="sub">Original prompt, seed {{ audio.seed }}</p><audio controls preload="none" src="{{ audio.before }}"></audio></div>
+  <div class="card"><h2>After</h2><p class="sub">Patched prompt, same seed</p><audio controls preload="none" src="{{ audio.after }}"></audio></div>
+</div>
+{% endif %}
+
+<div class="section grid two">
+  <div class="card">
+    <h2>Transcript</h2>
+    <p class="sub">Bot turns labelled against the taxonomy. Turns after the break are what the replays regenerate.</p>
+    <div class="chat">
+      {% for t in turns %}
+        {% if diagnosis and t.idx == diagnosis.break_idx %}<div class="fork">replays fork here</div>{% endif %}
+        {{ m.bubble(t) }}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="grid" style="align-content:start">
+    {% if diagnosis %}
+    <div class="card"><h2>Diagnosis</h2><p class="sub">Why turn #{{ diagnosis.break_idx }} is the break</p>
+      <p class="note">{{ diagnosis.rationale }}</p></div>
+    {% endif %}
+    {% if patch %}
+    <div class="card"><h2>Prompt patch</h2><p class="sub">Targets <span class="chip acc">{{ patch.target_category }}</span></p>
+      <div class="diff">{% for kind, line in diff %}<div class="{{ kind }}">{{ line }}</div>{% endfor %}</div>
+      <p class="note" style="margin-top:14px">{{ patch.rationale }}</p></div>
+    {% endif %}
+    {% if persona %}
+    <div class="card"><h2>Cloned customer</h2><p class="sub">Built from the customer's own lines only</p>
+      <div class="chips">
+        <span class="chip">patience {{ persona.patience }}/3</span><span class="chip">verbosity {{ persona.verbosity }}/3</span>
+        <span class="chip">trust {{ persona.trust_level }}/3</span><span class="chip">hindi {{ m.pct(persona.hindi_english_mix) }}</span>
+        {% if persona.interrupts %}<span class="chip">interrupts</span>{% endif %}
+      </div>
+      <p style="margin:14px 0 4px"><b>Converts if:</b> <span style="color:var(--muted)">{{ persona.will_convert_if }}</span></p>
+      <p style="margin:0"><b>Hangs up if:</b> <span style="color:var(--muted)">{{ persona.hard_stop_if }}</span></p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if summary %}
+<div class="section card">
+  <h2>Results by arm</h2><p class="sub">Blind LLM judge, continuation only. Paired on identical seeds.</p>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Arm</th><th class="num">Runs</th><th class="num">Next step</th><th class="num">Recovery</th><th class="num">Human-likeness</th><th class="num">Compliance</th></tr>
+    {% for arm in ["original", "patched"] %}{% set a = summary[arm] %}
+    <tr><td><b>{{ arm | capitalize }}</b></td><td class="num">{{ a.n }}</td>
+      {% if a.n %}<td class="num">{{ m.pct(a.next_step_rate) }}</td><td class="num">{{ m.num(a.mean_recovery) }}</td>
+      <td class="num">{{ m.num(a.mean_human_likeness) }}</td><td class="num">{{ m.pct(a.compliance_pass_rate) }}</td>
+      {% else %}<td class="num" colspan="4"><span class="empty">no scored runs</span></td>{% endif %}</tr>
+    {% endfor %}
+  </table></div>
+  {% if summary.regression %}
+  <h2 style="margin-top:26px">Regression check</h2><p class="sub">This patch replayed on other calls' forks: does it break anything?</p>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Other call</th><th class="num">Win rate</th><th class="num">Composite Δ</th><th class="num">Compliance</th></tr>
+    {% for cid, r in summary.regression.items() %}
+    <tr><td><a href="{{ urls.call(cid) }}">{{ cid }}</a></td><td class="num">{{ m.winrate(r.win_rate) }}</td>
+      <td class="num">{{ m.delta(r.delta_composite) }}</td>
+      <td class="num">{{ m.pct(r.original.compliance_pass_rate) if r.original.n else "–" }} → {{ m.pct(r.patched.compliance_pass_rate) if r.patched.n else "–" }}</td></tr>
+    {% endfor %}
+  </table></div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% for ex in examples %}
+<div class="section card">
+  <h2>{{ ex.title }}</h2><p class="sub">Seed {{ ex.seed }} · same customer, same randomness, different prompt</p>
+  <div class="grid two">
+    {% for side in [ex.before, ex.after] %}
+    <div>
+      <div class="col-h"><h3>{{ side.label }}</h3><span class="chip">{{ side.run.end_reason }}</span></div>
+      {{ m.score_badges(side.score) }}
+      <div class="chat compact" style="margin-top:12px">{% for t in side.turns %}{{ m.bubble(t, true) }}{% endfor %}</div>
+      {% if side.score %}<details><summary>Judge reasoning</summary><p>{{ side.score.reasons }}</p>
+        {% if side.score.compliance_issues %}<div class="chips">{% for i in side.score.compliance_issues %}<span class="chip s3">{{ i }}</span>{% endfor %}</div>{% endif %}
+      </details>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

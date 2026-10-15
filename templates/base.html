@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Call Doctor{% endblock %}</title>
+<style>{% include "_style.css" %}</style>
+<script>
+  try{var t=localStorage.getItem("cd-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+  function cdTheme(){var r=document.documentElement,d=r.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"),n=d==="dark"?"light":"dark";r.dataset.theme=n;try{localStorage.setItem("cd-theme",n)}catch(e){}}
+</script>
+</head>
+<body>
+<nav class="nav"><div class="in">
+  <a class="brand" href="{{ urls.home }}"><span class="logo">✚</span>Call Doctor</a>
+  <span class="sp"></span>
+  {% if app_mode %}<a class="btn" href="/jobs">Jobs</a><a class="btn primary" href="/new">+ New analysis</a>{% endif %}
+  <button class="btn icon-btn" onclick="cdTheme()" aria-label="Toggle theme" title="Toggle theme">◐</button>
+</div></nav>
+<main class="wrap">
+{% block body %}{% endblock %}
+<footer>Call Doctor · counterfactual replay for loan-sales voice bots · generated {{ generated_at }}</footer>
+</main>
+</body>
+</html>

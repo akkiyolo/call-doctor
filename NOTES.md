@@ -94,3 +94,11 @@
   HTTP client mid-request. Client creation is now under the lock.
 - Free tier: the judge (3.8-flash) hit 503s and then its daily quota; the original-arm score for
   busy_refuser seed 42 is still pending and fills in on the next `score` run.
+
+## Step 8: report
+- The templates (`templates/base.html`, `call.html`, `index.html`, `_macros.html`, `_style.css`) are
+  shared with the web app. A `Urls` object switches links between static files and app routes.
+- No external assets: system font stack, inline CSS, and a tiny inline theme-toggle script (the spec
+  says "no external JS"; inline is allowed). Light/dark follows the OS, with a manual toggle.
+- arm_metrics now always returns every key (None when n=0), so half-scored calls render.
+- The extra limitations shown on the index are generated from config (flash judge, judge==customer, N<5).

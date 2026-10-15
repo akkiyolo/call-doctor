@@ -145,6 +145,18 @@ def score(
     _done()
 
 
+@app.command()
+def report(
+    call_id: Optional[str] = typer.Argument(None, help="One call id; default all transcripts."),
+) -> None:
+    """Render reports/<call_id>.html and reports/index.html."""
+    from . import report as rp
+    from . import store
+
+    for p in rp.report([call_id] if call_id else None):
+        console.print(f"[green]wrote[/] {p}")
+
+
 def main() -> None:
     for stream in (sys.stdout, sys.stderr):  # Windows consoles default to cp1252; keep ₹ and Devanagari
         stream.reconfigure(encoding="utf-8")

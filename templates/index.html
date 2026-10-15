@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% block body %}
+<section class="hero">
+  <div class="eyebrow">Counterfactual replay</div>
+  <h1>Find where the call broke.<br><span class="grad">Prove the fix works.</span></h1>
+  <p class="lede">Each call is diagnosed, the real customer is cloned into a simulator, and the rest of the call is
+  replayed with the original prompt and a minimal patch on identical seeds. A blind judge scores both.</p>
+</section>
+
+<div class="grid kpis">
+  <div class="card kpi"><div class="label">Calls analysed</div><div class="value">{{ calls | length }}</div>
+    <div class="hint">{{ n_scored }} with scored replays</div></div>
+  <div class="card kpi"><div class="label">Mean paired win rate</div><div class="value">{{ m.pct(agg.win_rate) }}</div>
+    <div class="hint">patched beats original, same seed</div></div>
+  <div class="card kpi"><div class="label">Judge agreement</div>
+    <div class="value">{% if judge_check %}{{ m.pct(judge_check.agreement) }}{% else %}–{% endif %}</div>
+    <div class="hint">{% if judge_check %}human vs LLM judge · {{ judge_check.n }} checks{% else %}run judge-check{% endif %}</div></div>
+  <div class="card kpi"><div class="label">Total API cost</div><div class="value">${{ "%.2f" | format(total_cost) }}</div>
+    <div class="hint">estimated from token usage</div></div>
+</div>
+
+<div class="section card">
+  <h2>Calls</h2><p class="sub">Original → patched, blind-judged continuations</p>
+  {% if calls %}
+  <div class="scroll"><table class="tbl">
+    <tr><th>Call</th><th>Break</th><th class="num">Win rate</th><th class="num">Next step</th><th class="num">Compliance</th><th class="num">Regression Δ</th></tr>
+    {% for c in calls %}
+    <tr class="row-link">
+      <td><a href="{{ urls.call(c.call_id) }}"><b>{{ c.call_id }}</b></a><div style="color:var(--faint);font-size:12px">{{ c.source }}</div></td>
+      <td>{% if c.break_category %}<span class="chip s2">{{ c.break_category }}</span> <span style="color:var(--faint)">#{{ c.break_idx }}</span>{% else %}<span class="empty">pending</span>{% endif %}</td>
+      {% if c.summary %}{% set s = c.summary %}
+      <td class="num">{{ m.winrate(s.paired_win_rate) }}</td>
+      <td class="num">{{ m.pct(s.original.next_step_rate) if s.original.n else "–" }}<span class="arrow">→</span>{{ m.pct(s.patched.next_step_rate) if s.patched.n else "–" }}</td>
+      <td class="num">{{ m.pct(s.original.compliance_pass_rate) if s.original.n else "–" }}<span class="arrow">→</span>{{ m.pct(s.patched.compliance_pass_rate) if s.patched.n else "–" }}</td>
+      <td class="num">{{ m.delta(s.regression_delta) }}</td>
+      {% else %}<td class="num" colspan="4"><span class="empty">not replayed yet</span></td>{% endif %}
+    </tr>
+    {% endfor %}
+  </table></div>
+  {% else %}<p class="empty">No transcripts yet.</p>{% endif %}
+</div>
+
+<div class="section grid two">
+  <div class="card"><h2>Aggregate</h2><p class="sub">Mean over calls with scored replays</p>
+    <div class="scroll"><table class="tbl">
+      <tr><th>Metric</th><th class="num">Original</th><th class="num">Patched</th></tr>
+      <tr><td>Next-step rate</td><td class="num">{{ m.pct(agg.original.next_step_rate) }}</td><td class="num">{{ m.pct(agg.patched.next_step_rate) }}</td></tr>
+      <tr><td>Mean recovery (0–2)</td><td class="num">{{ m.num(agg.original.mean_recovery) }}</td><td class="num">{{ m.num(agg.patched.mean_recovery) }}</td></tr>
+      <tr><td>Human-likeness (0–2)</td><td class="num">{{ m.num(agg.original.mean_human_likeness) }}</td><td class="num">{{ m.num(agg.patched.mean_human_likeness) }}</td></tr>
+      <tr><td>Compliance pass</td><td class="num">{{ m.pct(agg.original.compliance_pass_rate) }}</td><td class="num">{{ m.pct(agg.patched.compliance_pass_rate) }}</td></tr>
+    </table></div></div>
+  <div class="card"><h2>Limitations</h2><p class="sub">Read before trusting the numbers</p>
+    <ul class="lim">
+      <li>Simulated customers approximate real ones; a clone is built from a handful of lines.</li>
+      <li>Text only: no audio timing, interruptions or prosody in the replays.</li>
+      <li>The judge is an LLM. Every model here is Gemini, so self-preference bias is reduced (judge ≠ bot model) but not eliminated. Human agreement from <code>judge-check</code> is the real validity evidence.</li>
+      {% for l in extra_limitations %}<li>{{ l }}</li>{% endfor %}
+    </ul></div>
+</div>
+{% endblock %}

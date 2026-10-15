@@ -76,10 +76,14 @@ def composite(s: Score) -> float:
     return 2 * s.next_step_reached + s.recovery + s.human_likeness - (0 if s.compliance_pass else 5)
 
 
+METRIC_KEYS = ("next_step_rate", "mean_recovery", "mean_human_likeness",
+               "compliance_pass_rate", "mean_composite")
+
+
 def arm_metrics(scores: list[Score]) -> dict:
     n = len(scores)
     if not n:
-        return {"n": 0}
+        return {"n": 0, **{k: None for k in METRIC_KEYS}}
     return {
         "n": n,
         "next_step_rate": sum(s.next_step_reached for s in scores) / n,

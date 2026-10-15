@@ -1,0 +1,33 @@
+{% macro pct(x) %}{% if x is none %}–{% else %}{{ (x * 100) | round | int }}%{% endif %}{% endmacro %}
+{% macro num(x, d=2) %}{% if x is none %}–{% else %}{{ "%.*f" | format(d, x) }}{% endif %}{% endmacro %}
+
+{% macro delta(x, d=2, suffix="") -%}
+  {%- if x is none -%}<span class="pill flat">n/a</span>
+  {%- elif x > 0.0001 -%}<span class="pill up">+{{ "%.*f" | format(d, x) }}{{ suffix }}</span>
+  {%- elif x < -0.0001 -%}<span class="pill down">{{ "%.*f" | format(d, x) }}{{ suffix }}</span>
+  {%- else -%}<span class="pill flat">±0{{ suffix }}</span>{%- endif -%}
+{%- endmacro %}
+
+{% macro winrate(x) -%}
+  {%- if x is none -%}<span class="pill flat">n/a</span>
+  {%- elif x > 0.5 -%}<span class="pill up">{{ pct(x) }}</span>
+  {%- elif x < 0.5 -%}<span class="pill down">{{ pct(x) }}</span>
+  {%- else -%}<span class="pill flat">{{ pct(x) }}</span>{%- endif -%}
+{%- endmacro %}
+
+{% macro bubble(t, compact=false) %}
+<div class="msg {{ t.speaker }}{% if t.is_break %} break{% endif %}{% if t.after %} after{% endif %}">
+  <div class="who">{{ "Bot" if t.speaker == "bot" else "Customer" }} · #{{ t.idx }}{% if t.is_break %} <span class="tag-break">BREAK</span>{% endif %}</div>
+  <div class="t">{{ t.text }}</div>
+  {% if t.labels %}<div class="chips">{% for c in t.labels %}<span class="chip s{{ t.severity }}">{{ c }} · sev {{ t.severity }}</span>{% endfor %}</div>{% endif %}
+</div>
+{% endmacro %}
+
+{% macro score_badges(s) %}
+{% if s %}<div class="badges">
+  <span class="chip {{ 'ok' if s.next_step_reached else 's2' }}">{{ "✓ next step" if s.next_step_reached else "✗ no next step" }}</span>
+  <span class="chip acc">recovery {{ s.recovery }}/2</span>
+  <span class="chip acc">human {{ s.human_likeness }}/2</span>
+  <span class="chip {{ 'ok' if s.compliance_pass else 's3' }}">{{ "compliant" if s.compliance_pass else "compliance ✗" }}</span>
+</div>{% else %}<span class="chip">not scored yet</span>{% endif %}
+{% endmacro %}
